@@ -90,19 +90,22 @@ public class UserDao {
 		}
 	}
 	
-	public User updateEmail(User user, String newEmail) throws SQLException {
-		String updateUser = "UPDATE User SET Email=? WHERE UserId=?;";
+	public User update(User user) throws SQLException {
+		String updateUser = "UPDATE User SET UserName=?, Email=?, DOB=?, Description=?, Address=? WHERE UserId=?;";
 		Connection connection = null;
 		PreparedStatement updateStmt = null;
 		try {
 			connection = connectionManager.getConnection();
 			updateStmt = connection.prepareStatement(updateUser);
-			updateStmt.setString(1, newEmail);
+			updateStmt.setString(1, user.getUserName());
 			updateStmt.setString(2, user.getEmail());
+			updateStmt.setTimestamp(3, new Timestamp(user.getDob().getTime()));
+			updateStmt.setString(4, user.getDescription());
+			updateStmt.setString(5, user.getAddress());
+			updateStmt.setInt(6, user.getUserId());
+			
 			updateStmt.executeUpdate();
 			
-			// Update the person param before returning to the caller.
-			user.setEmail(newEmail);
 			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
