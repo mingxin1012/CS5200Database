@@ -14,13 +14,35 @@
 	<h1>Update BlogUser</h1>
 	<form action="userupdate" method="post">
 		<p>
-			<label for="username">UserName</label>
-			<input id="username" name="username" value="${fn:escapeXml(param.username)}">
+			<label for="userid">UserId: ${fn:escapeXml(param.userid)}</label>
+			<input type="hidden" id="userid" name="userid" value="${fn:escapeXml(param.userid)}">
 		</p>
+		
 		<p>
-			<label for="lastname">New LastName</label>
-			<input id="lastname" name="lastname" value="">
+			<label for="username">New UserName</label>
+			<input id="username" name="username" value="${melodicMindsUser.getUserName()}">
 		</p>
+		
+		<p>
+			<label for="email">New email</label>
+			<input id="email" name="email" value="${melodicMindsUser.getEmail()}">
+		</p>
+		
+		<p>
+			<label for="dob">New DoB (yyyy-mm-dd)</label>
+			<input id="dob" name="dob" value="<fmt:formatDate value="${melodicMindsUser.getDob()}" pattern="yyyy-MM-dd" />">
+		</p>
+		
+		<p>
+			<label for="description">New Description</label>
+			<input id="description" name="description" value="${melodicMindsUser.getDescription()}">
+		</p>
+		
+		<p>
+			<label for="address">New Address</label>
+			<input id="address" name="address" value="${melodicMindsUser.getAddress()}">
+		</p>
+		
 		<p>
 			<input type="submit">
 		</p>
