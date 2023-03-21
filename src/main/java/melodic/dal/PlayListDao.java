@@ -132,5 +132,45 @@ public class PlayListDao {
 		}
 		return null;
 	}
+	
+	public List<PlayList> getPLayListForUser(User user) throws SQLException {
+		List<PlayList> playLists = new ArrayList<PlayList>();
+		String selectPlayList =
+			"SELECT PostId,Title,Picture,Content,Published,Created,UserName " +
+			"FROM PlayList " +
+			"WHERE UserId=?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectPlayList);
+			selectStmt.setLong(1, User.getUserId());
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				long PlayListId = results.getLong("PlayListId");
+				Date Created = results.getDate("Created");
+				
+				User user =UserDao.getUserFromUserId(results.getLong("UserId"));
+				
+				PlayList playList = new PlayList(PlayListId,user,Created);
+				PlayLists.add(playList);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return PLayList;
+	}
 
 }
