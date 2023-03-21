@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import melodic.model.PlayList;
+import melodic.model.*;
 
 public class PlayListDao {
 	protected ConnectionManager connectionManager;
