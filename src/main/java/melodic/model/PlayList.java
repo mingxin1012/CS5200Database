@@ -1,4 +1,4 @@
-package blog.model;
+package melodic.model;
 
 import java.util.Date;
 
