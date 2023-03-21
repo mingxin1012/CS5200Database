@@ -59,6 +59,7 @@ public class UserDeleteServlet extends HttpServlet {
 		        if (standardUser == null) {
 		            messages.put("title", "Successfully deleted UserId: " + userId);
 		            messages.put("disableSubmit", "true");
+		            isDeleted = true;
 		        } else {
 		        	messages.put("title", "Failed to delete UserId: " + userId);
 		        	messages.put("disableSubmit", "false");
@@ -76,6 +77,7 @@ public class UserDeleteServlet extends HttpServlet {
 			        if (premiumUser == null) {
 			            messages.put("title", "Successfully deleted UserId: " + userId);
 			            messages.put("disableSubmit", "true");
+			            isDeleted = true;
 			        } else {
 			        	messages.put("title", "Failed to delete UserId: " + userId);
 			        	messages.put("disableSubmit", "false");
