@@ -60,9 +60,6 @@ public class UserDeleteServlet extends HttpServlet {
 		            messages.put("title", "Successfully deleted UserId: " + userId);
 		            messages.put("disableSubmit", "true");
 		            isDeleted = true;
-		        } else {
-		        	messages.put("title", "Failed to delete UserId: " + userId);
-		        	messages.put("disableSubmit", "false");
 		        }
 	        } catch (SQLException e) {
 				
@@ -78,9 +75,6 @@ public class UserDeleteServlet extends HttpServlet {
 			            messages.put("title", "Successfully deleted UserId: " + userId);
 			            messages.put("disableSubmit", "true");
 			            isDeleted = true;
-			        } else {
-			        	messages.put("title", "Failed to delete UserId: " + userId);
-			        	messages.put("disableSubmit", "false");
 			        }
 		        } catch (SQLException e) {
 		        }
