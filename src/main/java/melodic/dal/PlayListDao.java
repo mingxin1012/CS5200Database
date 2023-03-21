@@ -1,4 +1,4 @@
-package blog.dal;
+package melodic.dal;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,9 +9,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import blog.model.BlogPosts;
-import blog.model.BlogUsers;
-import blog.model.PlayList;
+import melodic.model.PlayList;
 
 public class PlayListDao {
 	protected ConnectionManager connectionManager;
