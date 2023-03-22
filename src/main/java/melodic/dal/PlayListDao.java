@@ -6,9 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.sql.Types;
-
+import java.util.List;
+import java.util.ArrayList;
 import melodic.model.*;
 
 public class PlayListDao {
@@ -104,14 +103,12 @@ public class PlayListDao {
 			selectStmt.setLong(1, playListId);
 			results = selectStmt.executeQuery();
 			
-			BlogUsersDao blogUsersDao = BlogUsersDao.getInstance();
-			
+
 			if(results.next()) {
 				long PlayListId = results.getLong("PlayListId");
 				Date Created = results.getDate("Created");
-				
-				
-				User user =UserDao.getUserFromUserId(results.getLong("UserId"));
+				UserDao ud = UserDao.getInstance();
+				User user = ud.getUserFromUserID(results.getInt("UserId"));
 				
 				PlayList playList = new PlayList(PlayListId,user,Created);
 				return playList;
@@ -145,16 +142,14 @@ public class PlayListDao {
 		try {
 			connection = connectionManager.getConnection();
 			selectStmt = connection.prepareStatement(selectPlayList);
-			selectStmt.setLong(1, User.getUserId());
+			selectStmt.setLong(1, user.getUserId());
 			results = selectStmt.executeQuery();
 			while(results.next()) {
 				long PlayListId = results.getLong("PlayListId");
 				Date Created = results.getDate("Created");
-				
-				User user =UserDao.getUserFromUserId(results.getLong("UserId"));
-				
-				PlayList playList = new PlayList(PlayListId,user,Created);
-				PlayLists.add(playList);
+				User u = UserDao.getInstance().getUserFromUserID(results.getInt("UserId"));
+				PlayList playList = new PlayList(PlayListId,u,Created);
+				playLists.add(playList);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,7 +165,54 @@ public class PlayListDao {
 				results.close();
 			}
 		}
-		return PLayList;
+		return playLists;
 	}
+
+	public List<Track> getTracksForPLayList(PlayList playList) throws SQLException {
+		List<Track> tracks = new ArrayList<>();
+		String getTracks =
+				"SELECT *" +
+						"FROM PlayListJoiner " +
+						"INNER JOIN Track on Track.TrackId = PlayListJoiner.TrackId" +
+						"WHERE PlayListId=?";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(getTracks);
+			selectStmt.setLong(1, playList.getPlayListId());
+			results = selectStmt.executeQuery();
+			while(results.next()) {
+				int trackId = results.getInt("TrackId");
+				int albumId = results.getInt("AlbumId");
+				String artistName = results.getString("ArtistName");
+				String trackURL = results.getString("TrackURL");
+				String artistURL = results.getString("ArtistURL");
+				int durationMS = results.getInt("DurationMS");
+				String albumName = results.getString("AlbumName");
+				Track track = new Track(trackId, new Album(albumId, albumName), artistName, trackURL, artistURL, durationMS);
+				tracks.add(track);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return tracks;
+	}
+
+
+
+
 
 }
