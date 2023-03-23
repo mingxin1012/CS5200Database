@@ -5,10 +5,7 @@ import melodic.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.annotation.*;
 import javax.servlet.ServletException;
@@ -17,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/showuserplaylist")
-public class ShowUserPlaylist extends HttpServlet {
+@WebServlet("/showuserplaylists")
+public class ShowUserPlayLists extends HttpServlet {
 	
 	protected PlayListDao playListDao;
 	
@@ -43,15 +40,15 @@ public class ShowUserPlaylist extends HttpServlet {
         }
         
         // Retrieve BlogUsers, and store in the request.
-        List<PlayList> PlayLists = new ArrayList<PlayList>();
+        List<PlayList> playLists;
         try {
-        	User user = new User(userId);
+        	User user = new User(Integer.valueOf(userId));
         	playLists = playListsDao.getPlayListForUser(user);
         } catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);
         }
         req.setAttribute("playlists", playLists);
-        req.getRequestDispatcher("/ShowUserPlaylist.jsp").forward(req, resp);
+        req.getRequestDispatcher("/ShowUserPlayLists.jsp").forward(req, resp);
 	}
 }
