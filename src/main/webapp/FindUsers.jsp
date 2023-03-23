@@ -11,7 +11,7 @@
 <title>Find a User</title>
 </head>
 <body>
-	<form action="findusers" method="post">
+	<form action="findusers" method="get">
 		<h1>Search for a MelodicMindsUser by UserId</h1>
 		<p>
 			<label for="userid">UserId</label>
@@ -25,6 +25,10 @@
 	</form>
 	<br/>
 	<div id="userCreate"><a href="usercreate">Create MelodicMindsUser</a></div>
+	<br/><br/>
+	<div id="trackvo"><a href="trackvo">Top 10 Tracks</a></div>
+	<br/><br/>
+	<div id=searchtracks><a href="searchtracks">Search Tracks</a></div>
 	<br/>
 	<h1>Matching MelodicMindsUser</h1>
         <table border="1">
