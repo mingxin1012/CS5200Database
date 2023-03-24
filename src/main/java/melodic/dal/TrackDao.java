@@ -64,7 +64,6 @@ public class TrackDao {
             }
         }
     }
-
     public Track getTrackFromTrackURL(String trackURL) throws SQLException {
         String selectCreditCards =
                 "SELECT * FROM Track WHERE TrackURL=?;";
@@ -144,6 +143,29 @@ public class TrackDao {
             }
         }
     }
+    public Track deleteTrack(Track track) throws SQLException {
+        String deleteTrack = "DELETE FROM Track WHERE TrackId=?;";
+        Connection connection = null;
+        PreparedStatement deleteStmt = null;
+        try {
+            connection = connectionManager.getConnection();
+            deleteStmt = connection.prepareStatement(deleteTrack);
+            deleteStmt.setLong(1, track.getTrackId());
+            deleteStmt.executeUpdate();
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(deleteStmt != null) {
+                deleteStmt.close();
+            }
+        }
+    }
+
 
 
 }

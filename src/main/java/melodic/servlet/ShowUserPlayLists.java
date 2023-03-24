@@ -43,7 +43,7 @@ public class ShowUserPlayLists extends HttpServlet {
         List<PlayList> playLists;
         try {
         	User user = new User(Integer.valueOf(userId));
-        	playLists = playListsDao.getPlayListForUser(user);
+        	playLists = playListDao.getPLayListForUser(user);
         } catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);

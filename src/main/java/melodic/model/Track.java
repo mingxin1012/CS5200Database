@@ -24,10 +24,32 @@ public class Track {
 		this.duration_ms = duration_ms;
 		this.album_name = album_name;
 	}
+
+    public Track(int trackId, Album album, String artistName, String track_uri, String artist_uri,
+                 int duration_ms, String album_name) {
+        this.trackId = trackId;
+        this.trackName = trackName;
+        this.album = album;
+        this.artistName = artistName;
+        this.track_uri = track_uri;
+        this.artist_uri = artist_uri;
+        this.duration_ms = duration_ms;
+        this.album_name = album_name;
+    }
     
 
     public Track(String trackName, Album album, String artistName, String track_uri, String artist_uri, int duration_ms, String album_name) {
     	this.trackName = trackName;
+        this.album = album;
+        this.artistName = artistName;
+        this.track_uri = track_uri;
+        this.artist_uri = artist_uri;
+        this.duration_ms = duration_ms;
+        this.album_name = album_name;
+    }
+
+    public Track(Album album, String artistName, String track_uri, String artist_uri, int duration_ms, String album_name) {
+        this.trackName = trackName;
         this.album = album;
         this.artistName = artistName;
         this.track_uri = track_uri;
@@ -45,7 +67,17 @@ public class Track {
         this.duration_ms = duration_ms;
         
     }
-    
+
+    public Track(int trackId, Album album, String artistName, String track_uri, String artist_uri, int duration_ms) {
+        this.trackId = trackId;
+        this.album = album;
+        this.artistName = artistName;
+        this.track_uri = track_uri;
+        this.artist_uri = artist_uri;
+        this.duration_ms = duration_ms;
+
+    }
+
     public String getTrackName() {
 		return trackName;
 	}

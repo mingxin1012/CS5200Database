@@ -8,6 +8,12 @@ import melodic.model.PlayList;
 import melodic.model.PlayListJoiner;
 import melodic.model.Track;
 import melodic.model.Album;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -77,14 +83,14 @@ public class UserPlaylist extends HttpServlet {
         } else {
             try {
                 // create album if album name is not in db else return stored album
-                Album a = AlbumDao.getInstance().getAlbumByName(albumName);
-                if(a == null) {
-                    a = AlbumDao.getInstance().create(new Album(albumName));
+                Album album = AlbumDao.getInstance().getAlbumByName(albumName);
+                if(album == null) {
+                    album = AlbumDao.getInstance().create(new Album(albumName));
                 }
                 // create track if track is not in db else return stored track
                 Track t = TrackDao.getInstance().getTrackFromTrackURL(trackURL);
                 if(t == null){
-                    t = TrackDao.getInstance().create(new Track(a, artistName, trackURL, artistURL, Integer.valueOf(durationMS), albumName));
+                    t = TrackDao.getInstance().create(new Track(album, artistName, trackURL, artistURL, Integer.valueOf(durationMS), albumName));
                 }
                 // add track and playlist id into playlist joiner table
                 PlayList pl = PlayListDao.getInstance().getPlayListById(Integer.valueOf(playListId));
